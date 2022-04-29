@@ -1,5 +1,9 @@
 package com.teb.training.ee.rest;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -7,8 +11,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "kisi")
 public class Person {
 
+    @Id
+    @GeneratedValue
+    private Long    personId;
     @NotEmpty
     @Size(min = 2, max = 25, message = "name 2 ile 25 arasında olmalı")
     private String  name;
@@ -24,6 +33,14 @@ public class Person {
     @DecimalMax("360")
     @DecimalMin("0")
     private Double  angle;
+
+    public Long getPersonId() {
+        return this.personId;
+    }
+
+    public void setPersonId(final Long personIdParam) {
+        this.personId = personIdParam;
+    }
 
     public String getName() {
         return this.name;

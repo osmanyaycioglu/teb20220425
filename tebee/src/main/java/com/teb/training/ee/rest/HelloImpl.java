@@ -2,6 +2,7 @@ package com.teb.training.ee.rest;
 
 import java.util.Date;
 
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,9 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.teb.training.ee.ejb.MySingletonBean;
+
 @Path("/hello")
 @Produces("text/plain")
 public class HelloImpl {
+
+    @EJB
+    private MySingletonBean mySingletonBean;
 
     // /tebee/api/hello/greet/osman/yay
     @Path("/greet/{abc}/{xyz}")
