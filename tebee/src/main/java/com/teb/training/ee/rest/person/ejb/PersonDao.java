@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
@@ -26,11 +28,13 @@ public class PersonDao {
                                   IllegalArgumentException.class,
                                   IllegalStateException.class
     })
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void insert(final Person personParam) {
         this.entityManager.persist(personParam);
     }
 
     @Transactional
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void update(final Person personParam) {
         boolean containsLoc = this.entityManager.contains(personParam);
         if (!containsLoc) {

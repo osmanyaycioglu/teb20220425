@@ -1,8 +1,14 @@
 package com.teb.training.ee.rest;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -17,22 +23,45 @@ public class Person {
 
     @Id
     @GeneratedValue
-    private Long    personId;
+    private Long          personId;
     @NotEmpty
     @Size(min = 2, max = 25, message = "name 2 ile 25 arasında olmalı")
-    private String  name;
+    private String        name;
     @NotEmpty
     @Size(min = 3, max = 30, message = "surname {min} ile {max} arasında olmalı")
-    private String  surname;
+    private String        surname;
     @Max(123890129083129038L)
     @Min(128373L)
-    private Long    startTime;
+    private Long          startTime;
     @Max(150)
     @Min(10)
-    private Integer age;
+    private Integer       age;
     @DecimalMax("360")
     @DecimalMin("0")
-    private Double  angle;
+    private Double        angle;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private PersonDetails personDetails;
+
+    // @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Phone> phoneNumbers;
+
+    public Set<Phone> getPhoneNumbers() {
+        return this.phoneNumbers;
+    }
+
+    public void setPhoneNumbers(final Set<Phone> phoneNumbersParam) {
+        this.phoneNumbers = phoneNumbersParam;
+    }
+
+    public PersonDetails getPersonDetails() {
+        return this.personDetails;
+    }
+
+    public void setPersonDetails(final PersonDetails personDetailsParam) {
+        this.personDetails = personDetailsParam;
+    }
 
     public Long getPersonId() {
         return this.personId;
